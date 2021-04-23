@@ -99,9 +99,11 @@ public class EndpointDiscoveryVerticle extends AbstractVerticle implements
     private void lookupForServiceDiscovery(Api api) {
         if (api.isEnabled()) {
             for (EndpointGroup group : api.getProxy().getGroups()) {
-                EndpointDiscoveryService discoveryService = group.getServices().get(EndpointDiscoveryService.class);
-                if (discoveryService != null && discoveryService.isEnabled()) {
-                    startServiceDiscovery(api, group, discoveryService);
+                if (group.getServices() != null) {
+                    EndpointDiscoveryService discoveryService = group.getServices().get(EndpointDiscoveryService.class);
+                    if (discoveryService != null && discoveryService.isEnabled()) {
+                        startServiceDiscovery(api, group, discoveryService);
+                    }
                 }
             }
         }
